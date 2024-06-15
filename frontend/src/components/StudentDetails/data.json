@@ -1,0 +1,15 @@
+[
+    {
+      "name": "John Doe",
+      "class": "10th Grade",
+      "attendance": "95%",
+      "marks": {
+        "Math": 90,
+        "Science": 85,
+        "English": 88
+      },
+      "mentor": "Mr. Smith",
+      "image": "https://via.placeholder.com/100"
+    }
+  ]
+  
