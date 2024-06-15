@@ -15,7 +15,6 @@ function App() {
       
         <PieChart data={data} />
       </div>
-    </div>
   )
 }
 
