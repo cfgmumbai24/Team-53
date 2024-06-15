@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export const MainLogin = (props) => {
@@ -7,6 +8,7 @@ export const MainLogin = (props) => {
         password: "",
         role: ""
     });
+    const navigate = useNavigate();
 
     function changeHandler(event) {
         setFormData(prev => ({
@@ -18,6 +20,11 @@ export const MainLogin = (props) => {
     function submitHandler(e) {
         e.preventDefault();
         toast.success("Login Success");
+        if(formData.role==='fellow')
+            navigate('/fellow');
+        else if(formData.role==='admin')
+            navigate('/admin');
+
     }
 
     return (
@@ -70,9 +77,9 @@ export const MainLogin = (props) => {
                     className="bg-gray-700 rounded-md w-full p-3 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     <option value="" disabled>Select your role</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Fellow">Fellow</option>
-                    <option value="Student">Student</option>
+                    <option value="admin">Admin</option>
+                    <option value="fellow">Fellow</option>
+            
                 </select>
             </label>
 
