@@ -13,7 +13,7 @@ import { MainLogin } from './components/MainLogin'
 import AddAssessment from './components/AddAssessment'
 import AddFellowForm from './components/newfellow'
 import AddStudentForm from './components/newstudent'
-
+import StudentList  from './pages/class-students'
 
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
         <AddAssessment></AddAssessment>
         <AddFellowForm/>
         <AddStudentForm></AddStudentForm>
-       
+       < StudentList />
 
       </div>
   )
