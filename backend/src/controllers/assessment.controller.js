@@ -65,4 +65,24 @@ const addAssessment = asyncHandler(async (req, res) => {
     );
 });
 
-export {addAssessment};
+const getStudentAssessments = asyncHandler(async (req, res) => {
+    const studentId = req.params.studentId; // student ID from URL parameter
+
+    // Check if the student ID is provided
+    if (!studentId) {
+        throw new ApiError(400, "Student ID is required");
+    }
+
+    // Retrieve assessments for the given student, sorted by createdAt field (earliest to latest)
+    const assessments = await Assessment.find({ student: studentId }).sort('createdAt');
+
+    if (!assessments) {
+        throw new ApiError(404, "No assessments found for the given student");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, assessments, "Assessments retrieved successfully")
+    );
+});
+
+export { addAssessment, getStudentAssessments };

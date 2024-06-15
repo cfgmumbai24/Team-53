@@ -68,4 +68,32 @@ const allStudents = asyncHandler(async (req, res) => {
     );
 });
 
-export { registerStudent, allStudents };
+const getStudentsByClassAndFellow = asyncHandler(async (req, res) => {
+    const { class: studentClass } = req.body;
+    const fellowId = req.params.fellowId; // fellow ID from URL parameter
+
+    // Validate the student class parameter
+    const studentClassNumber = parseInt(studentClass, 10); // Convert the class param to a number
+    if (isNaN(studentClassNumber) || studentClassNumber < 1 || studentClassNumber > 5) {
+        throw new ApiError(400, "Invalid student class parameter. Must be a number between 1 and 5.");
+    }
+
+    // Validate the fellow ID parameter
+    if (!fellowId) {
+        throw new ApiError(400, "Fellow ID is required.");
+    }
+
+    // Retrieve students belonging to the given class and fellow
+    const students = await Student.find({ class: studentClassNumber, fellow: fellowId });
+
+    if (!students || students.length === 0) {
+        throw new ApiError(404, "No students found for the given class and fellow");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, students, "Students retrieved successfully")
+    );
+});
+
+
+export { registerStudent, allStudents, getStudentsByClassAndFellow };
