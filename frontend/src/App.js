@@ -8,12 +8,12 @@ import LineChart from './components/LineChart'
 import PieChart from './components/PieChart'
 
 function App() {
-  const data = [35, 39, 59, 47]
+  const data1 = [35, 39, 59, 47]
+  const data2 = [7,8,9,7,9,8,8,9,8,8]
   return (
     <div>
-      <h1>Line Chart</h1>
-      
-        <PieChart data={data} />
+        <PieChart data={data1} />
+        <LineChart data={data2} />
       </div>
   )
 }
