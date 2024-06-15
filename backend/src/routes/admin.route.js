@@ -5,7 +5,8 @@ import {
     registerAdmin,
     getAllFellows,
     getTotalNumberOfStudents,
-    getStudentsCountByCategory
+    getStudentsCountByCategory,
+    getAverageTotalByDate
 } from "../controllers/admin.controllers.js";
 import { verifyAdminJWT } from "../middleware/auth.middleware.js";
 
@@ -22,5 +23,6 @@ router.route("/logout").post(verifyAdminJWT, logoutAdmin);
 router.route("/get-all-fellows").get(getAllFellows);
 router.route("/student-count").get(getTotalNumberOfStudents);
 router.route("/student-category-count").get(getStudentsCountByCategory);
+router.route("/average").get(getAverageTotalByDate);
 
 export default router;

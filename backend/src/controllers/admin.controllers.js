@@ -242,6 +242,29 @@ const getStudentsCountByCategory = asyncHandler(async (req, res) => {
     );
 });
 
+const getAverageTotalByDate = asyncHandler(async (req, res) => {
+    const averages = await Assessment.aggregate([
+        {
+            $group: {
+                _id: { $dateToString: { format: "%Y-%m-%d", date: "$assessmentDate" } },
+                averageTotal: { $avg: "$total" }
+            }
+        },
+        {
+            $sort: { _id: 1 } // Sort by date in ascending order
+        }
+    ]);
+
+    if (!averages.length) {
+        throw new ApiError(404, "No assessments found");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, averages, "Average totals by date retrieved successfully")
+    );
+});
+
+
 
 
 export {
@@ -252,4 +275,5 @@ export {
     getAllFellows,
     getTotalNumberOfStudents,
     getStudentsCountByCategory,
+    getAverageTotalByDate
 };
