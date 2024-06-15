@@ -8,12 +8,16 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 const addAssessment = asyncHandler(async (req, res) => {
-    const { listening, numeracy, speaking, literacy, reading } = req.body;
+    const { listening, numeracy, speaking, literacy, reading, assessmentDate } = req.body;
     const studentId = req.params.studentId; // student ID from URL parameter
 
     // Validate input
     if (![listening, numeracy, speaking, literacy, reading].every((field) => typeof field === 'number')) {
         throw new ApiError(400, "Listening, numeracy, speaking, literacy, and reading must be numbers");
+    }
+
+    if (!assessmentDate) {
+        throw new ApiError(400, "Assessment date is required");
     }
 
     // Check if the student exists
@@ -44,6 +48,7 @@ const addAssessment = asyncHandler(async (req, res) => {
     const assessment = await Assessment.create({
         fellow: fellowId,
         student: studentId,
+        assessmentDate,
         listening,
         numeracy,
         speaking,
