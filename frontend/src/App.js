@@ -1,14 +1,25 @@
-// import React, { useState, useEffect } from 'react';
-// import StudentDetails from './components/StudentDetails/StudentDetails';
-// import studentsData from './data.json'; // Import the JSON data
 
-import StudentDashboard from "./components/StudentDetails/StudentDashborad";
+// src/App.js
+import React from 'react'
+import './App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { AdminDashboard } from './pages/admin'
+import { FellowPage } from './pages/fellow'
+import LineChart from './components/LineChart'
+import PieChart from './components/PieChart'
+import StudentDashboard from './components/StudentDetails/StudentDashborad'
 
 function App() {
-  
+  const data1 = [35, 39, 59, 47]
+  const data2 = [7,8,9,7,9,8,8,9,8,8]
   return (
-    <StudentDashboard></StudentDashboard>
-  );
+    <div>
+        <PieChart data={data1} />
+        <LineChart data={data2} />
+        <StudentDashboard/>
+      </div>
+  )
+
 }
 
-export default App;
+export default App
