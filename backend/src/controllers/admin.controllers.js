@@ -1,6 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Admin } from "../models/admin.model.js";
+import { Fellow } from "../models/admin.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
@@ -198,10 +199,57 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 });
 
+const getAllFellows = asyncHandler(async (req, res) => {
+    // Retrieve all fellows from the database
+    const fellows = await Fellow.find().select('-password -refreshToken'); // Exclude sensitive fields
+
+    if (!fellows || fellows.length === 0) {
+        throw new ApiError(404, "No fellows found");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, fellows, "Fellows retrieved successfully")
+    );
+});
+
+const getTotalNumberOfStudents = asyncHandler(async (req, res) => {
+    // Retrieve the total number of students from the database
+    const totalStudents = await Student.countDocuments();
+
+    return res.status(200).json(
+        new ApiResponse(200, { totalStudents }, "Total number of students retrieved successfully")
+    );
+});
+
+const getStudentsCountByCategory = asyncHandler(async (req, res) => {
+    // Aggregation pipeline to group students by category and count them
+    const categoryCounts = await Student.aggregate([
+        {
+            $group: {
+                _id: "$category",
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+
+    const formattedCounts = categoryCounts.reduce((acc, category) => {
+        acc[category._id] = category.count;
+        return acc;
+    }, {});
+
+    return res.status(200).json(
+        new ApiResponse(200, formattedCounts, "Number of students by category retrieved successfully")
+    );
+});
+
+
 
 export {
     registerAdmin,
     loginAdmin,
     logoutAdmin,
     refreshAccessToken,
+    getAllFellows,
+    getTotalNumberOfStudents,
+    getStudentsCountByCategory,
 };
