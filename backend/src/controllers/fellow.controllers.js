@@ -1,9 +1,9 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import {ApiError} from "../utils/ApiError.js"
-import { Fellow } from "../models/fellow.model.js"
-import {uploadOnCloudinary} from "../utils/cloudinary.js"
+import {ApiError} from "../utils/ApiError.js";
+import { Fellow } from "../models/fellow.model.js";
+// import {uploadOnCloudinary} from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
 
@@ -45,8 +45,8 @@ const registerFellow = asyncHandler( async (req, res) => {
         throw new ApiError(400, "All fields are required")
     }
 
-    const existedfellow = await fellow.findOne({
-        $or: [{ fellowName }, { email }]
+    const existedfellow = await Fellow.findOne({
+        $or: [{ email }]
     })
 
     if (existedfellow) {
@@ -54,29 +54,15 @@ const registerFellow = asyncHandler( async (req, res) => {
     }
     //console.log(req.files);
 
-    const avatarLocalPath = req.files?.avatar[0]?.path;
-    //const coverImageLocalPath = req.files?.coverImage[0]?.path;
-    
-
-    if (!avatarLocalPath) {
-        throw new ApiError(400, "Avatar file is required")
-    }
-
-    const avatar = await uploadOnCloudinary(avatarLocalPath)
-
-    if (!avatar) {
-        throw new ApiError(400, "Avatar file is required")
-    }
    
 
-    const fellow = await fellow.create({
-        avatar: avatar.url,
+    const fellow = await Fellow.create({
         email, 
         password,
-        fellowName: fellowName.toLowerCase()
+        fellowName
     })
 
-    const createdfellow = await fellow.findById(fellow._id).select(
+    const createdfellow = await Fellow.findById(fellow._id).select(
         "-password -refreshToken"
     )
 
@@ -98,7 +84,7 @@ const loginFellow = asyncHandler(async (req, res) =>{
     //access and referesh token
     //send cookie
 
-    const {email, fellowName, password} = req.body
+    const {email, fellowName, password} = req.body;
     console.log(email);
 
     if (!fellowName && !email) {
@@ -111,8 +97,8 @@ const loginFellow = asyncHandler(async (req, res) =>{
         
     // }
 
-    const fellow = await fellow.findOne({
-        $or: [{fellowName}, {email}]
+    const fellow = await Fellow.findOne({
+        $or: [{email}]
     })
 
     if (!fellow) {
@@ -127,7 +113,7 @@ const loginFellow = asyncHandler(async (req, res) =>{
 
    const {accessToken, refreshToken} = await generateAccessAndRefereshTokens(fellow._id)
 
-    const loggedInFellow = await fellow.findById(fellow._id).select("-password -refreshToken")
+    const loggedInFellow = await Fellow.findById(fellow._id).select("-password -refreshToken")
 
     const options = {
         httpOnly: true,
@@ -188,7 +174,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
             process.env.REFRESH_TOKEN_SECRET
         )
     
-        const fellow = await fellow.findById(decodedToken?._id)
+        const fellow = await Fellow.findById(decodedToken?._id)
     
         if (!fellow) {
             throw new ApiError(401, "Invalid refresh token")
