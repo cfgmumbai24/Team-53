@@ -30,6 +30,10 @@ app.use(express.static("public"));
 
 app.use(cookieParser());
 
+import adminRouter from './routes/admin.route.js';
+import fellowRouter from './routes/fellow.route.js';
 
+app.use('/api/v1/admin', adminRouter);
+app.use('/api/v1/fellow', fellowRouter);
 
 export { app };
