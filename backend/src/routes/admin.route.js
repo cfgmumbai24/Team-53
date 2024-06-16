@@ -3,6 +3,10 @@ import {
     loginAdmin,
     logoutAdmin,
     registerAdmin,
+    getAllFellows,
+    getTotalNumberOfStudents,
+    getStudentsCountByCategory,
+    getAverageTotalByDate
 } from "../controllers/admin.controllers.js";
 import { verifyAdminJWT } from "../middleware/auth.middleware.js";
 
@@ -16,5 +20,9 @@ router.route("/login").post(loginAdmin);
 
 // Secured routes
 router.route("/logout").post(verifyAdminJWT, logoutAdmin);
+router.route("/get-all-fellows").get(getAllFellows);
+router.route("/student-count").get(getTotalNumberOfStudents);
+router.route("/student-category-count").get(getStudentsCountByCategory);
+router.route("/average").get(getAverageTotalByDate);
 
 export default router;

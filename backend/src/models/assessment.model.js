@@ -12,10 +12,10 @@ const assessmentSchema = new Schema(
             ref: "Student",
             required: true
         },
-        // assessmentDate: {
-        //     type: Date,
-        //     required: true
-        // },
+        assessmentDate: {
+            type: Date,
+            required: true
+        },
         listening: {
             type: Number,
             default: 0

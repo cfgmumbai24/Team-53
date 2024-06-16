@@ -1,12 +1,26 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header1 from './Header1';
 
 export const HomePage = () => {
+  const navigate = useNavigate();
+
+  function handleLoginNavigation() {
+    navigate('/MainLogin');
+  }
+
   return (
     <div className="container mx-auto p-4">
       <Header1 />
 
       <div className="mt-8">
+        <button 
+          onClick={handleLoginNavigation} 
+          className="bg-blue-500 text-white px-4 py-2 rounded mb-6"
+        >
+          Go to Login
+        </button>
+        
         <h1 className="text-3xl font-semibold text-gray-800 mb-4">Welcome to our NGO</h1>
 
         <div className="section" id="introduction">
@@ -55,3 +69,5 @@ export const HomePage = () => {
     </div>
   )
 }
+
+export default HomePage;

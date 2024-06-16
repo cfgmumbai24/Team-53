@@ -12,4 +12,4 @@ const Header1 = () => {
   );
 }
 
-export default Header1;
+export default Header1;

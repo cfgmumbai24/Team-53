@@ -33,9 +33,11 @@ app.use(cookieParser());
 import adminRouter from './routes/admin.route.js';
 import fellowRouter from './routes/fellow.route.js';
 import studentRouter from './routes/student.route.js';
+import assessmentRouter from './routes/assessment.route.js';
 
 app.use('/api/v1/student', studentRouter);
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/fellow', fellowRouter);
+app.use('/api/v1/assessment', assessmentRouter);
 
 export { app };

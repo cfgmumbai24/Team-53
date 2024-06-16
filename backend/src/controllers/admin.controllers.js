@@ -1,6 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Admin } from "../models/admin.model.js";
+import { Fellow } from "../models/fellow.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
@@ -198,10 +199,81 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 });
 
+const getAllFellows = asyncHandler(async (req, res) => {
+    // Retrieve all fellows from the database
+    const fellows = await Fellow.find().select('-password -refreshToken'); // Exclude sensitive fields
+
+    if (!fellows || fellows.length === 0) {
+        throw new ApiError(404, "No fellows found");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, fellows, "Fellows retrieved successfully")
+    );
+});
+
+const getTotalNumberOfStudents = asyncHandler(async (req, res) => {
+    // Retrieve the total number of students from the database
+    const totalStudents = await Student.countDocuments();
+
+    return res.status(200).json(
+        new ApiResponse(200, { totalStudents }, "Total number of students retrieved successfully")
+    );
+});
+
+const getStudentsCountByCategory = asyncHandler(async (req, res) => {
+    // Aggregation pipeline to group students by category and count them
+    const categoryCounts = await Student.aggregate([
+        {
+            $group: {
+                _id: "$category",
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+
+    const formattedCounts = categoryCounts.reduce((acc, category) => {
+        acc[category._id] = category.count;
+        return acc;
+    }, {});
+
+    return res.status(200).json(
+        new ApiResponse(200, formattedCounts, "Number of students by category retrieved successfully")
+    );
+});
+
+const getAverageTotalByDate = asyncHandler(async (req, res) => {
+    const averages = await Assessment.aggregate([
+        {
+            $group: {
+                _id: { $dateToString: { format: "%Y-%m-%d", date: "$assessmentDate" } },
+                averageTotal: { $avg: "$total" }
+            }
+        },
+        {
+            $sort: { _id: 1 } // Sort by date in ascending order
+        }
+    ]);
+
+    if (!averages.length) {
+        throw new ApiError(404, "No assessments found");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, averages, "Average totals by date retrieved successfully")
+    );
+});
+
+
+
 
 export {
     registerAdmin,
     loginAdmin,
     logoutAdmin,
     refreshAccessToken,
+    getAllFellows,
+    getTotalNumberOfStudents,
+    getStudentsCountByCategory,
+    getAverageTotalByDate
 };
