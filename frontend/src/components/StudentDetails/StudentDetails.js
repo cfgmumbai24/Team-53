@@ -1,25 +1,33 @@
 import React from 'react';
+import LineChart from '../LineChart';
 
 const StudentDetails = ({ student }) => {
   return (
-    <div className="relative bg-beige p-6 rounded-lg shadow-lg text-white">
+    <div className="relative bg-lightBrown p-8 rounded-lg shadow-lg text-textBrown">
+      
+      <div className='item1'>
+      <h2 className="text-3xl font-bold mb-4 text-darkBrown">{student.name}</h2>
+      <p className="text-lg mb-3 font-semibold">Class: <span className="font-semibold">{student.class}</span></p>
+      <p className="text-lg mb-4 font-semibold">Attendance: <span className="font-semibold">{student.attendance}</span></p>
+      <div className="mb-4">
+        <h3 className="text-2xl font-semibold mb-2 text-darkBrown">Evaluation:</h3>
+        <ul className="list-disc list-inside">
+          {Object.entries(student.marks).map(([subject, mark], idx) => (
+            <li key={idx} className="text-lg">{subject}: <span className="font-semibold">{mark}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<progress id="file" value={mark} max="10"> 32% </progress></li>
+          ))}
+        </ul>
+        <p className="text-lg font-semibold">Fellow: <span className="font-semibold">{student.mentor}</span></p>
+      </div>
+          <LineChart data={[35, 39, 49, 47]}/>
+      </div>
+      <div className='item3'>
       <img 
         src={student.image} 
         alt={`${student.name}`} 
-        className="absolute top-4 right-4 w-16 h-16 rounded-full border-2 border-white shadow-md"
+        className="absolute top-10 right-10 w-75 h-75 rounded-full border-4 border-mediumBrown shadow-md"
       />
-      <h2 className="text-2xl font-bold mb-2">{student.name}</h2>
-      <p className="text-lg mb-2">Class: {student.class}</p>
-      <p className="text-lg mb-2">Attendance: {student.attendance}</p>
-      <div className="mb-2">
-        <h3 className="text-xl font-semibold mb-1">Marks:</h3>
-        <ul className="list-disc list-inside">
-          {Object.entries(student.marks).map(([subject, mark], idx) => (
-            <li key={idx} className="text-lg">{subject}: {mark}</li>
-          ))}
-        </ul>
       </div>
-      <p className="text-lg">Mentor: {student.mentor}</p>
+      
     </div>
   );
 };

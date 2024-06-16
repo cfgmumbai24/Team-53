@@ -4,11 +4,13 @@
       "class": "10th Grade",
       "attendance": "95%",
       "marks": {
-        "Math": 90,
-        "Science": 85,
-        "English": 88
+        "Literacy": 9,
+        "Numeracy": 8.5,
+        "Speaking": 8.8,
+        "Listening": 7,
+        "Reflect":7.8
       },
-      "mentor": "Mr. Smith",
+      "mentor": "Riya",
       "image": "https://via.placeholder.com/100"
     }
   ]

@@ -17,7 +17,7 @@ import AddStudentForm from './components/newstudent'
 
 
 function App() {
-  const data1 = [35, 39, 59, 47]
+  const data1 = [35, 39, 49, 47]
   const data2 = [7,8,9,7,9,8,8,9,8,8]
   return (
     <div>
