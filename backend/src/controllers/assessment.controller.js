@@ -34,11 +34,11 @@ const addAssessment = asyncHandler(async (req, res) => {
 
     // Determine category based on total
     let category;
-    if (total <= 10) {
+    if (total <= 100) {
         category = 'A';
-    } else if (total <= 20) {
+    } else if (total <= 200) {
         category = 'B';
-    } else if (total <= 35) {
+    } else if (total <= 350) {
         category = 'C';
     } else {
         category = 'D';
