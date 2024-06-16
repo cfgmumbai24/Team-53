@@ -27,12 +27,14 @@ const data2 = [7, 8, 9, 7, 9, 8, 8, 9, 8, 8];
         <Route path='/MainLogin' element={<MainLogin />} />
         <Route path='/admin' element={<AdminDashboard />} />
         <Route path='/fellow' element={<FellowPage />} />
-        <Route path='/line-chart' element={<LineChart data={data1} />} />
-        <Route path='/pie-chart' element={<PieChart data={data2} />} />
+        <Route path='/line-chart' element={<LineChart data={data2} />} />
+        <Route path='/pie-chart' element={<PieChart data={data1} />} />
         <Route path='/student-dashboard' element={<StudentDashboard />} />
         <Route path='/add-assessment' element={<AddAssessment />} />
         <Route path='/add-fellow' element={<AddFellowForm />} />
         <Route path='/add-student' element={<AddStudentForm />} />
+        <Route path='/newfellow' element={<AddFellowForm/>} />
+        <Route path='/class-students' element={<StudentList/>}  />
       </Routes>
     </Router>
   );

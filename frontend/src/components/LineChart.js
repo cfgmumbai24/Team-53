@@ -41,5 +41,5 @@ export default function LineChart({ data }) {
     }
   }, [data])
 
-  return <canvas ref={chartRef} style={{ width: '80%', height: '10vh' }} />
+  return <canvas ref={chartRef} style={{ width: '80%', height: '100vh' }} />
 }

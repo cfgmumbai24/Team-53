@@ -1,5 +1,6 @@
 // src/pages/admin.js
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const fellows = [
   { id: 1, name: 'John Doe', photo: 'https://via.placeholder.com/150' },
@@ -93,7 +94,10 @@ export const AdminDashboard = () => {
     fontSize: '16px',
     marginTop: '20px',
   }
-
+  const navigate=useNavigate()
+  function handler(){
+    navigate('/newfellow')
+  }
   return (
     <div style={dashboardStyle}>
       <h1 style={headerStyle}>Admin Dashboard</h1>
@@ -123,7 +127,7 @@ export const AdminDashboard = () => {
             </div>
           ))}
         </div>
-        <button style={buttonStyle}>Add New Fellow</button>
+        <button style={buttonStyle} onClick={handler}>Add New Fellow</button>
       </section>
     </div>
   )
