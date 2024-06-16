@@ -17,16 +17,11 @@ import StudentList  from './pages/class-students'
 
 
 function App() {
-<<<<<<< HEAD
-  const data1 = [35, 39, 49, 47]
-  const data2 = [7,8,9,7,9,8,8,9,8,8]
-=======
 
 const data1 = [35, 39, 59, 47];
 const data2 = [7, 8, 9, 7, 9, 8, 8, 9, 8, 8];
->>>>>>> 0f029ea61e2c1a15cd7f02e96b06babce3d0a75a
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/MainLogin' element={<MainLogin />} />
@@ -39,7 +34,7 @@ const data2 = [7, 8, 9, 7, 9, 8, 8, 9, 8, 8];
         <Route path='/add-fellow' element={<AddFellowForm />} />
         <Route path='/add-student' element={<AddStudentForm />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
